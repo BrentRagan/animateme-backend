@@ -1,4 +1,3 @@
-// server.js
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
@@ -13,6 +12,9 @@ app.use(bodyParser.json({ limit: '10mb' }));
 
 app.post('/generate', async (req, res) => {
   const { imageDataUrl, theme, headline, caption } = req.body;
+
+  console.log("Received request:");
+  console.log({ theme, headline, caption, image: imageDataUrl?.slice(0, 30) + '...' });
 
   const content = [
     { type: 'text', text: `Please transform this photo into a cartoon.\nTheme: ${theme}\nHeadline: ${headline}\nCaption: ${caption}` }
@@ -43,9 +45,12 @@ app.post('/generate', async (req, res) => {
     });
 
     const data = await response.json();
+
+    console.log("OpenAI response:", data);
+
     res.json(data);
   } catch (error) {
-    console.error(error);
+    console.error("Error talking to OpenAI:", error);
     res.status(500).json({ error: 'Something went wrong with the OpenAI request.' });
   }
 });
