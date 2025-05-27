@@ -15,8 +15,7 @@ app.post('/generate', async (req, res) => {
   console.log("Received request:");
   console.log({ theme, headline, caption, image: imageDataUrl?.slice(0, 30) + '...' });
 
-  // ✅ Log your API key
-  console.log("Using API Key:", process.env.OPENAI_API_KEY);
+  console.log("Using API Key:", process.env.OPENAI_API_KEY); // Debug line
 
   const content = [
     { type: 'text', text: `Please transform this photo into a cartoon.\nTheme: ${theme}\nHeadline: ${headline}\nCaption: ${caption}` }
